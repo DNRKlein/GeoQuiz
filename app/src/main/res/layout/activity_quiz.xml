@@ -18,11 +18,14 @@
         >
         <!-- the true button on the left,because it is 'inserted first' -->
         <Button
+            android:id="@+id/true_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/true_button"/>
 
+        <!-- the android id's are so that you can access these buttons in code via de R.java file -->
         <Button
+            android:id="@+id/false_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/false_button"/>
