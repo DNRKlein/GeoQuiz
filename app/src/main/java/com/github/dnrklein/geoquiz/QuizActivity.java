@@ -4,14 +4,39 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 
 public class QuizActivity extends Activity {
+
+    //added 2 variables to hold the buttons
+    private Button mTrueButton;
+    private Button mFalseButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
+
+        //trueButton and its listener
+        mTrueButton = (Button)findViewById(R.id.true_button);
+        //adding a listener that does something 'onClick' and you must override its method onClick --> what happens when the button is clicked
+        mTrueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        //listener for the false_button, same as for true_button
+        mFalseButton = (Button)findViewById(R.id.false_button);
+        mFalseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
 

@@ -7,4 +7,10 @@
     <string name="true_button">True</string>
     <string name="false_button">False</string>
 
+    <!-- string resources that announce whether user gave correct answer
+    These are goign to be used by toast, which are small popups that do not
+    require user input or action -->
+    <string name="correct_toast">Correct!</string>
+    <string name="incorrect_toast">Incorrect!</string>
+
 </resources>
