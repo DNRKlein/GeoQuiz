@@ -34,6 +34,30 @@ public class QuizActivity extends Activity {
     //It is the index of the array of questions
     private int mCurrentIndex = 0;
 
+    //this method updates the question and sets it in the textview
+    private void updateQuestion(){
+        int question = mQuestionBank[mCurrentIndex].getQuestion();
+        mQuestionTextView.setText(question);
+    }
+
+    //this method is to check the answer and give a toast telling the user if answer was correct
+    //it takes a boolean to see if user pressed true or false button
+    private void checkAnswer(boolean userPressedTrue){
+        boolean answerIsTrue = mQuestionBank[mCurrentIndex].isTrueQuestion();
+
+        int messageResId = 0;
+
+        if(userPressedTrue == answerIsTrue){
+            messageResId = R.string.correct_toast;
+        }
+
+        else{
+            messageResId = R.string.incorrect_toast;
+        }
+
+        Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +67,6 @@ public class QuizActivity extends Activity {
         //Setting question in textview using getQuestion() from the TrueFalse class
         //it gets the question through using the id's
         mQuestionTextView = (TextView)findViewById(R.id.question_text_view);
-        int question = mQuestionBank[mCurrentIndex].getQuestion();
-        mQuestionTextView.setText(question);
 
         //trueButton and its listener
         mTrueButton = (Button)findViewById(R.id.true_button);
@@ -71,10 +93,12 @@ public class QuizActivity extends Activity {
             @Override
             public void onClick(View view) {
                 mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
-                int question = mQuestionBank[mCurrentIndex].getQuestion();
-                mQuestionTextView.setText(question);
+                updateQuestion();
             }
         });
+
+        //initial setting of the question
+        updateQuestion();
     }
 
 
