@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.util.Log;
 
 
 public class QuizActivity extends Activity {
@@ -16,6 +17,9 @@ public class QuizActivity extends Activity {
     private Button mTrueButton;
     private Button mFalseButton;
     private Button mNextButton;
+
+    //constant for debugging
+    private static final String TAG = "QuizActivity";
 
     //the textview
     private TextView mQuestionTextView;
@@ -62,6 +66,7 @@ public class QuizActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate(Bundle) called");
         setContentView(R.layout.activity_quiz);
 
         //Setting question in textview using getQuestion() from the TrueFalse class
