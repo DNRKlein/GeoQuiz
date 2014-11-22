@@ -106,6 +106,32 @@ public class QuizActivity extends Activity {
         updateQuestion();
     }
 
+    //the rest of the activity methods
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart() called");
+    }
+
+    @Override
+    public void onPause() {
+        Log.d(TAG, "onPause() called");
+    }
+
+    @Override
+    public void onResume() {
+        Log.d(TAG, "onResume() called");
+    }
+
+    @Override
+    public void onStop() {
+        Log.d(TAG, "onStop() called");
+    }
+
+    @Override
+    public void onDestroy() {
+        Log.d(TAG, "onDestroy() called");
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
