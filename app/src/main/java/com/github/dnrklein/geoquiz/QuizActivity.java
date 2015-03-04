@@ -80,6 +80,7 @@ public class QuizActivity extends Activity {
             @Override
             public void onClick(View view) {
                 checkAnswer(true);
+                mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
                 updateQuestion();
             }
         });
@@ -90,6 +91,8 @@ public class QuizActivity extends Activity {
             @Override
             public void onClick(View view) {
                 checkAnswer(false);
+                mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
+                updateQuestion();
             }
         });
 
