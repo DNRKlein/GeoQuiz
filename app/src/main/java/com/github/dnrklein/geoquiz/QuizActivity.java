@@ -80,6 +80,7 @@ public class QuizActivity extends Activity {
             @Override
             public void onClick(View view) {
                 checkAnswer(true);
+                updateQuestion();
             }
         });
 

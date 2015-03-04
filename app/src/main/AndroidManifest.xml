@@ -16,6 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <uses-sdk android:minSdkVersion="15"
+                  android:targetSdkVersion="16"
+                  android:maxSdkVersion="17" />
     </application>
 
 </manifest>
