@@ -2,12 +2,14 @@ package com.github.dnrklein.geoquiz;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 
 public class QuizActivity extends Activity {
@@ -19,6 +21,8 @@ public class QuizActivity extends Activity {
 
     //the textview
     private TextView mQuestionTextView;
+
+    //private static final String TAG = "QuizActivity";
 
     //array to hold all the questions defined in strings.xml
     //it is an array of TrueFalse objects
@@ -100,7 +104,7 @@ public class QuizActivity extends Activity {
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
+                //mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
                 updateQuestion();
             }
         });
