@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.util.Log;
 
 
 public class QuizActivity extends Activity {
@@ -35,6 +34,10 @@ public class QuizActivity extends Activity {
     //It is the index of the array of questions
     private int mCurrentIndex = 0;
 
+    //final for onSave...
+    //this keeps track of the current index even when screen is rotated
+    private static final String KEY_INDEX = "index";
+
     //this method updates the question and sets it in the textview
     private void updateQuestion(){
         int question = mQuestionBank[mCurrentIndex].getQuestion();
@@ -46,7 +49,7 @@ public class QuizActivity extends Activity {
     private void checkAnswer(boolean userPressedTrue){
         boolean answerIsTrue = mQuestionBank[mCurrentIndex].isTrueQuestion();
 
-        int messageResId = 0;
+        int messageResId;
 
         if(userPressedTrue == answerIsTrue){
             messageResId = R.string.correct_toast;
@@ -102,8 +105,20 @@ public class QuizActivity extends Activity {
             }
         });
 
+        //checking if the saved state isnt null, if so get the index of the current question
+        //is only not null if something in configuration has changed, for example screen rotation
+        if(savedInstanceState != null){
+            mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
+        }
         //initial setting of the question
         updateQuestion();
+    }
+
+    //overriding to make sure question keeps the same on screen rotation
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
     }
 
     //the rest of the activity methods
