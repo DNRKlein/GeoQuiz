@@ -25,4 +25,8 @@
     <string name = "warning_text">Are you sure you want to do this?</string>
     <string name = "show_answer_button">Show answer</string>
     <string name = "judgment_toast">Cheating is wrong!</string>
+    <string name="title_activity_cheat_activyt">CheatActivyt</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_cheat">CheatActivity</string>
 </resources>
