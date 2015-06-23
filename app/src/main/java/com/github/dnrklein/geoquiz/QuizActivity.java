@@ -117,11 +117,14 @@ public class QuizActivity extends Activity {
             mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
         }
 
+        //creating an "explicit" intent
         mCheatButton = (Button)findViewById(R.id.cheat_button);
         mCheatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent cheatIntent = new Intent(QuizActivity.this, CheatActivity.class);
+                boolean  answerIsTrue = mQuestionBank[mCurrentIndex].isTrueQuestion();
+                cheatIntent.putExtra(CheatActivity.EXTRA_ANSWER_IS_TRUE, answerIsTrue);
                 startActivity(cheatIntent);
             }
         });
