@@ -21,9 +21,6 @@
             android:label="@string/app_name" >
         </activity>
 
-        <uses-sdk
-            android:minSdkVersion="15"
-            android:targetSdkVersion="22" />
 
     </application>
 
