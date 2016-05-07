@@ -1,6 +1,7 @@
 package com.github.dnrklein.geoquiz;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,8 +13,11 @@ import android.widget.TextView;
 public class CheatActivity extends Activity {
 
     public static final String EXTRA_ANSWER_IS_TRUE = "com.github.dnrklein.GeoQuiz.answer_is_true";
+    public static final String EXTRA_ANSWER_SHOWN = "com.github.dnrklein.GeoQuiz.answer_shown";
+    public static final String KEY_CHEAT = "cheat";
 
     private boolean mAnswerIsTrue;
+    private boolean mAnswerIsShown;
     private TextView mAnswerTextView;
     private Button mShowAnswer;
 
@@ -26,6 +30,17 @@ public class CheatActivity extends Activity {
 
         mAnswerTextView = (TextView)findViewById(R.id.answerTextView);
 
+        //check savedInstanceState for whether the user already cheated but deleted evidence by changing rotation
+        if(savedInstanceState != null){
+            mAnswerIsShown = savedInstanceState.getBoolean(KEY_CHEAT);
+        }
+        else{
+            mAnswerIsShown = false;
+        }
+
+        //setting the result intent to mAnswerIsShown which is false on first opening of cheatactivity
+        setAnswerShownResult(mAnswerIsShown);
+
         mShowAnswer = (Button)findViewById(R.id.showAnswerButton);
         mShowAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,8 +51,16 @@ public class CheatActivity extends Activity {
                 else{
                     mAnswerTextView.setText(R.string.false_button);
                 }
+                setAnswerShownResult(true);
             }
         });
+    }
+
+    //overriding to make sure the cheating cant be cleared by changing rotation
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putBoolean(KEY_CHEAT, mAnswerIsShown);
     }
 
     @Override
@@ -60,5 +83,12 @@ public class CheatActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setAnswerShownResult(boolean isAnswerShown){
+        mAnswerIsShown = isAnswerShown;
+        Intent data = new Intent();
+        data.putExtra(EXTRA_ANSWER_SHOWN, mAnswerIsShown);
+        setResult(RESULT_OK, data);
     }
 }

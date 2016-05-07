@@ -36,6 +36,8 @@ public class QuizActivity extends Activity {
             new TrueFalse(R.string.question_asia, true)
     };
 
+    private boolean[] hasCheated = new boolean[] {false, false, false, false, false};
+
     //This variable is to keep track of which question should be asked
     //It is the index of the array of questions
     private int mCurrentIndex = 0;
@@ -43,6 +45,9 @@ public class QuizActivity extends Activity {
     //final for onSave...
     //this keeps track of the current index even when screen is rotated
     private static final String KEY_INDEX = "index";
+
+    //this keeps track of whether the user cheated
+    private static final String KEY_IS_CHEATER = "isCheater";
 
     //this method updates the question and sets it in the textview
     private void updateQuestion(){
@@ -57,17 +62,17 @@ public class QuizActivity extends Activity {
 
         int messageResId;
 
-        if(userPressedTrue == answerIsTrue){
-            messageResId = R.string.correct_toast;
+        if(hasCheated[mCurrentIndex]){
+            messageResId = R.string.judgment_toast;
+        } else {
+            if (userPressedTrue == answerIsTrue) {
+                messageResId = R.string.correct_toast;
+            } else {
+                messageResId = R.string.incorrect_toast;
+            }
         }
-
-        else{
-            messageResId = R.string.incorrect_toast;
-        }
-
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,8 +90,6 @@ public class QuizActivity extends Activity {
             @Override
             public void onClick(View view) {
                 checkAnswer(true);
-                mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
-                updateQuestion();
             }
         });
 
@@ -96,8 +99,6 @@ public class QuizActivity extends Activity {
             @Override
             public void onClick(View view) {
                 checkAnswer(false);
-                mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
-                updateQuestion();
             }
         });
 
@@ -115,6 +116,7 @@ public class QuizActivity extends Activity {
         //is only not null if something in configuration has changed, for example screen rotation
         if(savedInstanceState != null){
             mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
+            hasCheated[mCurrentIndex] = savedInstanceState.getBoolean(KEY_IS_CHEATER);
         }
 
         //creating an "explicit" intent
@@ -125,7 +127,7 @@ public class QuizActivity extends Activity {
                 Intent cheatIntent = new Intent(QuizActivity.this, CheatActivity.class);
                 boolean  answerIsTrue = mQuestionBank[mCurrentIndex].isTrueQuestion();
                 cheatIntent.putExtra(CheatActivity.EXTRA_ANSWER_IS_TRUE, answerIsTrue);
-                startActivity(cheatIntent);
+                startActivityForResult(cheatIntent, 0);
             }
         });
 
@@ -138,6 +140,7 @@ public class QuizActivity extends Activity {
     public void onSaveInstanceState(Bundle savedInstanceState){
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
+        savedInstanceState.putBoolean(KEY_IS_CHEATER, hasCheated[mCurrentIndex]);
     }
 
     //the rest of the activity methods
@@ -183,5 +186,13 @@ public class QuizActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(data == null){
+            return;
+        }
+        hasCheated[mCurrentIndex] = data.getBooleanExtra(CheatActivity.EXTRA_ANSWER_SHOWN, false);
     }
 }
